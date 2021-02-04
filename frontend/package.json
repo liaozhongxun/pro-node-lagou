@@ -1,0 +1,17 @@
+{
+    "name": "frontend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "license": "MIT",
+    "scripts": {
+        "build": "npx webpack",
+        "dev": "npx webpack-dev-server"
+    },
+    "devDependencies": {
+        "copy-webpack-plugin": "6",
+        "html-webpack-plugin": "4.5.0",
+        "webpack": "4.44.2",
+        "webpack-cli": "3.3.12",
+        "webpack-dev-server": "3.11.0"
+    }
+}
