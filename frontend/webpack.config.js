@@ -1,8 +1,12 @@
 // 默认配置文件 可通过 --config 改变
 
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+//复制文件
+const CopyPlugin = require("copy-webpack-plugin");
+//清空dist文件夹
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
 //导出模块
 module.exports = {
     //配置环境  (默认生产环境production)
@@ -18,7 +22,7 @@ module.exports = {
     //配置出口
     output: {
         path: path.join(__dirname, "./dist"), //绝对路径输出
-        filename: "app.js", //输出文件名
+        filename: "[name].[hash].js", //输出文件名
     },
 
     //配置服务
@@ -26,6 +30,28 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 9000,
+    },
+
+    //配置loader 加载器
+    module: {
+        rules: [
+            // {
+            //     test: /\.jpg$/,
+            //     loader: "file-loader",
+            // },
+            // {
+            //     test: /\.png$/,
+            //     loader: "url-loader?mimetype=image/png",
+            // },
+            {
+                test: /\.art$/,
+                loader: "art-template-loader",
+                options: {
+                    // art-template options (if necessary)
+                    // @see https://github.com/aui/art-template
+                },
+            },
+        ],
     },
 
     //配置插件
@@ -49,10 +75,11 @@ module.exports = {
                 {
                     from: "public/*.ico",
                     to({ context, absoluteFilename }) {
-                      return "./[name].[ext]";
+                        return "./[name].[hash].[ext]";
                     },
                 },
             ],
         }),
+        new CleanWebpackPlugin(),
     ],
 };

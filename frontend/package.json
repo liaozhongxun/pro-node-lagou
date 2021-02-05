@@ -8,6 +8,9 @@
         "dev": "npx webpack-dev-server"
     },
     "devDependencies": {
+        "art-template": "^4.13.2",
+        "art-template-loader": "^1.4.3",
+        "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "6",
         "html-webpack-plugin": "4.5.0",
         "webpack": "4.44.2",
