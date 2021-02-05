@@ -21,6 +21,7 @@ module.exports = {
         filename: "app.js", //输出文件名
     },
 
+    //配置服务
     devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
@@ -35,13 +36,23 @@ module.exports = {
             filename: "index.html",
             inject: true, //将js注入到head中
         }),
-        // new CopyPlugin({
-        //     patterns: [
-        //         {
-        //             from: path.join(__dirname, "./public/*.ico"),
-        //             to: path.join(__dirname, "./dist"),
-        //         },
-        //     ],
-        // }),
+        new CopyPlugin({
+            patterns: [
+                // {
+                //     from:path.join(__dirname,"./public/favicon.ico"),
+                //     to: './test0',
+                // },
+                // {
+                //     from: "/**/*",
+                //     to: "test1",
+                // },
+                {
+                    from: "public/*.ico",
+                    to({ context, absoluteFilename }) {
+                      return "./[name].[ext]";
+                    },
+                },
+            ],
+        }),
     ],
 };
