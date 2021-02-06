@@ -35,14 +35,6 @@ module.exports = {
     //配置loader 加载器
     module: {
         rules: [
-            // {
-            //     test: /\.jpg$/,
-            //     loader: "file-loader",
-            // },
-            // {
-            //     test: /\.png$/,
-            //     loader: "url-loader?mimetype=image/png",
-            // },
             {
                 test: /\.art$/,
                 loader: "art-template-loader",
@@ -50,6 +42,10 @@ module.exports = {
                     // art-template options (if necessary)
                     // @see https://github.com/aui/art-template
                 },
+            },
+            {
+                test: /\.css$/,
+                loaders: ["style-loader", "css-loader"],
             },
         ],
     },

@@ -1,12 +1,9 @@
 /**
  * src  源代码  source
  */
+import "./assets/css/common.css";
 
-import indexart from "./views/index.art";
-
-let html = indexart();
-
-$("#app").html(html);
+import "./routers";
 
 /**
  * http://adminlte.xueyao.org/pages/invoice.html#
