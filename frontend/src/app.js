@@ -1,6 +1,8 @@
 /**
  * src  源代码  source
  */
+// console.log(module.hot)
+// if (module.hot) { module.hot.accept(); }
 import "./assets/css/common.css";
 
 import "./routers";

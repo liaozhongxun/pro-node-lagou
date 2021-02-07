@@ -30,6 +30,10 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 9000,
+        open:true,
+        bonjour: true,
+        hot:true,
+        inline:true
     },
 
     //配置loader 加载器
@@ -56,7 +60,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "./public/index.html"),
             filename: "index.html",
-            inject: true, //将js注入到head中
+            inject: true,
         }),
         new CopyPlugin({
             patterns: [
@@ -73,6 +77,10 @@ module.exports = {
                     to({ context, absoluteFilename }) {
                         return "./[name].[hash].[ext]";
                     },
+                },
+                {
+                    from: "public/libs",
+                    to: "./libs"
                 },
             ],
         }),
