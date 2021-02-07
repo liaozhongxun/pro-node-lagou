@@ -17,10 +17,30 @@ const _handleSubmit = (router) => {
         router.go("/index");
     };
 };
+
+const _userAdd = () => {
+    console.log($("#exampleInputUser1").val());
+    console.log($("#exampleInputPassword1").val());
+    let params = {
+        username: $("#exampleInputUser1").val(),
+        password: $("#exampleInputPassword1").val(),
+    };
+    $.ajax({
+        url: "/api/user/signup",
+        type: "post",
+        data: params,
+        success: (res) => {
+            console.log(res);
+        },
+    });
+};
+
 const index = (router) => {
     return (req, res, next) => {
         res.render(indexartHtml); //$("#app").html(registerHtml);
         $(".wrapper").trigger("resize");
+
+        $("#userAdd").on("click", _userAdd);
     };
 };
 
