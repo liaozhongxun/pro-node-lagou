@@ -2,15 +2,15 @@ var { Users } = require("../db/schema/users");
 
 let hasuser = (us) => {
     let username = us || "";
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
         Users.find({ us: username }).then((res) => {
             if (res.length > 0) {
-                resolve(true)
+                resolve(true);
             } else {
-                resolve(false)
+                resolve(false);
             }
         });
-    })
+    });
 };
 
 let signup = (data, res) => {
@@ -25,11 +25,43 @@ let signup = (data, res) => {
                 resolve(res);
             },
             (err) => {
-                res.send("插入错误,请检查参数是否正常!");
+                res.send({ status: -1, msg: "插入错误,请检查参数是否正常!" });
             }
         );
     });
 };
 
+let queryList = (name, res) => {
+    return new Promise((resolve, reject) => {
+        Users.find({ us: new RegExp(name) }).then(
+            (res) => {
+                console.log(name);
+                resolve(res);
+            },
+            (err) => {
+                res.send({ status: -1, msg: "查询错误!" });
+            }
+        );
+    });
+};
+
+let delList = (id, res) => {
+    return new Promise((resolve, reject) => {
+        Users.remove({ _id: id }).then(
+            (res) => {
+                resolve(res);
+            },
+            (err) => {
+                res.send({ status: -1, msg: "删除错误!" });
+            }
+        );
+    });
+};
+
+let modifyList = (data, res) => {};
+
 exports.signup = signup;
 exports.hasuser = hasuser;
+exports.queryList = queryList;
+exports.delList = delList;
+exports.modifyList = modifyList;

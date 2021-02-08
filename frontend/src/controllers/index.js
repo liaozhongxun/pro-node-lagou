@@ -26,13 +26,19 @@ const _userAdd = () => {
         ps: $("#exampleInputPassword1").val(),
     };
     $.ajax({
-        url: "http://localhost:3005/api/users/signup",
+        url: "http://localhost:3006/api/users/signup",
         type: "post",
-        contentType:'application/json;charset=utf-8',
         data: params,
 
         success: (res) => {
             console.log(res);
+            if(res.status == 0){
+                $("#exampleInputUser1").val("")
+                $("#exampleInputPassword1").val("")
+                alert('添加成功')
+            }else{
+                alert(res.msg)
+            }
         },
     });
 };
