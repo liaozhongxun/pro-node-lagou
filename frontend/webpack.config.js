@@ -33,6 +33,7 @@ module.exports = {
         open:true,
         bonjour: true,
         hot:true,
+        hotOnly:true,
         inline:true
     },
 
@@ -85,5 +86,6 @@ module.exports = {
             ],
         }),
         new CleanWebpackPlugin(),
+        // new webpack.HotModuleReplacementPlugin()
     ],
 };

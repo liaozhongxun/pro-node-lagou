@@ -22,13 +22,15 @@ const _userAdd = () => {
     console.log($("#exampleInputUser1").val());
     console.log($("#exampleInputPassword1").val());
     let params = {
-        username: $("#exampleInputUser1").val(),
-        password: $("#exampleInputPassword1").val(),
+        us: $("#exampleInputUser1").val(),
+        ps: $("#exampleInputPassword1").val(),
     };
     $.ajax({
-        url: "/api/user/signup",
+        url: "http://localhost:3005/api/users/signup",
         type: "post",
+        contentType:'application/json;charset=utf-8',
         data: params,
+
         success: (res) => {
             console.log(res);
         },
