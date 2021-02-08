@@ -13,16 +13,16 @@ let hasuser = (us) => {
     });
 };
 
-let signup = (data, res) => {
-    console.log(data);
+let signup = (params, res) => {
+    console.log(params);
 
-    // let sin = new Users(data);
+    // let sin = new Users(params);
     // return sin.save(); //保存并返回一个promise
 
     return new Promise((resolve, reject) => {
-        Users.insertMany(data).then(
-            (res) => {
-                resolve(res);
+        Users.insertMany(params).then(
+            (data) => {
+                resolve(data);
             },
             (err) => {
                 res.send({ status: -1, msg: "插入错误,请检查参数是否正常!" });
@@ -33,23 +33,25 @@ let signup = (data, res) => {
 
 let queryList = (name, res) => {
     return new Promise((resolve, reject) => {
-        Users.find({ us: new RegExp(name) }).then(
-            (res) => {
-                console.log(name);
-                resolve(res);
-            },
-            (err) => {
-                res.send({ status: -1, msg: "查询错误!" });
-            }
-        );
+        Users.find({ us: new RegExp(name) })
+            .sort({ _id: -1 })
+            .then(
+                (data) => {
+                    console.log(name);
+                    resolve(data);
+                },
+                (err) => {
+                    res.send({ status: -1, msg: "查询错误!" });
+                }
+            );
     });
 };
 
 let delList = (id, res) => {
     return new Promise((resolve, reject) => {
         Users.remove({ _id: id }).then(
-            (res) => {
-                resolve(res);
+            (data) => {
+                resolve(data);
             },
             (err) => {
                 res.send({ status: -1, msg: "删除错误!" });
@@ -74,9 +76,9 @@ let modifyList = (data, res) => {
 let signin = ({ us, ps }, res) => {
     return new Promise((resolve, reject) => {
         Users.find({ us: us, ps: ps }).then(
-            (res) => {
-                if (res.length > 0) {
-                    resolve(res);
+            (data) => {
+                if (data.length > 0) {
+                    resolve(data);
                 } else {
                     res.send({ status: -1, msg: "用户名或密码错误!" });
                 }

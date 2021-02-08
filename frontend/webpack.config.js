@@ -30,11 +30,19 @@ module.exports = {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
         port: 9000,
-        open:true,
+        open: true,
         bonjour: true,
-        hot:true,
-        hotOnly:true,
-        inline:true
+        hot: true,
+        hotOnly: true,
+        inline: true,
+        //请求到 /api/users 现在会被代理到请求 http://localhost:3006/api/users。
+        //?!接口域名到底是自动获取还是通过变量配置好
+        proxy: {
+            "/api": {
+                target: "http://localhost:3006",
+                pathRewrite: { "^/api": "/api" },
+            },
+        },
     },
 
     //配置loader 加载器
@@ -81,7 +89,7 @@ module.exports = {
                 },
                 {
                     from: "public/libs",
-                    to: "./libs"
+                    to: "./libs",
                 },
             ],
         }),

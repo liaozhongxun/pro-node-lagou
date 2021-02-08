@@ -1,6 +1,7 @@
 import indexart from "../views/index.art";
 import registerart from "../views/register.art";
 import loginart from "../views/login.art";
+import userListTpl from "../views/user-list.art";
 
 let indexartHtml = indexart();
 let registerHtml = registerart();
@@ -26,18 +27,39 @@ const _userAdd = () => {
         ps: $("#exampleInputPassword1").val(),
     };
     $.ajax({
-        url: "http://localhost:3006/api/users/signup",
+        url: "/api/users/signup",
         type: "post",
         data: params,
 
         success: (res) => {
             console.log(res);
-            if(res.status == 0){
-                $("#exampleInputUser1").val("")
-                $("#exampleInputPassword1").val("")
-                alert('添加成功')
-            }else{
-                alert(res.msg)
+            if (res.status == 0) {
+                $("#exampleInputUser1").val("");
+                $("#exampleInputPassword1").val("");
+                alert("添加成功");
+                _getlist("");
+            } else {
+                alert(res.msg);
+            }
+        },
+    });
+};
+
+const _getlist = (name) => {
+    $.ajax({
+        url: "/api/users/query",
+        type: "post",
+        data: { name: name },
+
+        success: (res) => {
+            if (res.status == 0) {
+                $("#user-list").html(
+                    userListTpl({
+                        data: res.result,
+                    })
+                );
+            } else {
+                alert(res.msg);
             }
         },
     });
@@ -49,6 +71,8 @@ const index = (router) => {
         $(".wrapper").trigger("resize");
 
         $("#userAdd").on("click", _userAdd);
+
+        _getlist("");
     };
 };
 

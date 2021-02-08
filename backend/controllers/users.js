@@ -1,4 +1,5 @@
 let usersModels = require("../models/users");
+const { hash } = require("../utils/tools");
 
 const signup = async (req, res, next) => {
     let { ps, us } = req.body;
@@ -9,8 +10,10 @@ const signup = async (req, res, next) => {
         return;
     }
 
-    let result = await usersModels.signup({ us, ps }, res); //因为返回promise 所有可以使用 await 等待
-    res.send({ status: 0, result: result });
+    let bcryptPs = await hash(ps); //相同两次得到的加密串不同
+
+    let result = await usersModels.signup({ us, ps: bcryptPs }, res); //因为返回promise 所有可以使用 await 等待
+    res.send({ status: 0, msg: "ok" });
 };
 
 const queryUser = async (req, res, next) => {
@@ -47,5 +50,5 @@ module.exports = {
     queryUser,
     delUser,
     modify,
-    signin
+    signin,
 };

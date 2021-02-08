@@ -1,0 +1,11 @@
+{{each data}}
+<tr>
+    <td>{{$index+1}}</td>
+    <td>{{$value._id}}</td>
+    <td>{{$value.us}}</td>
+    <td>
+        <button type="button" class="btn btn-xs btn-info">编辑</button>
+        <button type="button" class="btn btn-danger btn-xs">删除</button>
+    </td>
+</tr>
+{{/each}}
