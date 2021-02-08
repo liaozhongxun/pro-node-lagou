@@ -15,21 +15,37 @@ const signup = async (req, res, next) => {
 
 const queryUser = async (req, res, next) => {
     let { name } = req.body;
-    name = name || ""; 
+    name = name || "";
     let result = await usersModels.queryList(name, res);
     console.log(result);
-    res.send({status:0,msg:'ok',result:result});
+    res.send({ status: 0, msg: "ok", result: result });
 };
 
 const delUser = async (req, res, next) => {
     let { id } = req.body;
     let result = await usersModels.delList(id, res);
     console.log(result);
-    res.send({status:0,msg:'ok',result:result});
+    res.send({ status: 0, msg: "ok", result: result });
+};
+
+const modify = async (req, res, next) => {
+    let data = req.body;
+    let result = await usersModels.modifyList(data, res);
+    console.log(result);
+    res.send({ status: 0, msg: "ok", result: result });
+};
+
+const signin = async (req, res, next) => {
+    let { ps, us } = req.body;
+    let result = await usersModels.signin({ ps, us }, res);
+    console.log(result);
+    res.send({ status: 0, msg: "ok", result: result });
 };
 
 module.exports = {
     signup,
     queryUser,
     delUser,
+    modify,
+    signin
 };
