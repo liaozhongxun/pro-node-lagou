@@ -5,3 +5,9 @@ exports.hash = (ps) => {
     ps = ps + "";
     return bcrypt.hash(ps, saltRounds);
 };
+
+exports.compare = (ps,pshash)=>{
+    return bcrypt.compare(ps, pshash)
+}
+
+

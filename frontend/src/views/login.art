@@ -1,6 +1,6 @@
 <div class="login-box">
     <div class="login-logo">
-        <a href="index2.html"><b>Admin</b>LTE</a>
+        <a href="index2.html"><b>Node Pro Login</a>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
@@ -10,6 +10,7 @@
             <div class="form-group has-feedback">
                 <input
                     type="text"
+                    id="login-username"
                     class="form-control"
                     placeholder="用户名"
                 />
@@ -21,6 +22,7 @@
                 <input
                     type="password"
                     class="form-control"
+                    id="login-pwd"
                     placeholder="密码"
                 />
                 <span

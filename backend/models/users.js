@@ -5,7 +5,7 @@ let hasuser = (us) => {
     return new Promise((resolve, reject) => {
         Users.find({ us: username }).then((res) => {
             if (res.length > 0) {
-                resolve(true);
+                resolve(res);
             } else {
                 resolve(false);
             }

@@ -7,4 +7,4 @@ router.route("/index", index(router));
 router.route("/login", login(router));
 router.route("/register", register(router));
 
-router.go("/");
+router.go("/login");

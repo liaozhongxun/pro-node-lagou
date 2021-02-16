@@ -31,10 +31,10 @@ module.exports = {
         compress: true,
         port: 9000,
         open: true,
-        bonjour: true,
-        hot: true,
-        hotOnly: true,
-        inline: true,
+        // bonjour: true,
+        // hot: true,
+        // hotOnly: true,
+        //inline: true,
         //请求到 /api/users 现在会被代理到请求 http://localhost:3006/api/users。
         //?!接口域名到底是自动获取还是通过变量配置好
         proxy: {

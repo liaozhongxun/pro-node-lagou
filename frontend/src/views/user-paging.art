@@ -1,0 +1,5 @@
+<li class='left'><a href="#">&laquo;</a></li>
+{{each pageArr}}
+<li class='page'><a href="#">{{$index + 1 }}</a></li>
+{{/each}}
+<li class='right'><a href="#">&raquo;</a></li>
