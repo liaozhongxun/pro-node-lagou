@@ -60,6 +60,10 @@ module.exports = {
                 test: /\.css$/,
                 loaders: ["style-loader", "css-loader"],
             },
+            {
+                test: /\.(png|jpg|gif)$/,
+                loader: 'file-loader', 
+            }
         ],
     },
 

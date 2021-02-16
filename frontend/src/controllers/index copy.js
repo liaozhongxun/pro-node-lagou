@@ -4,12 +4,13 @@ import loginart from "../views/login.art";
 import userListTpl from "../views/user-list.art";
 import userPagingTpl from "../views/user-paging.art";
 
-let indexartHtml = indexart();
+// let indexartHtml = indexart();
 let registerHtml = registerart();
 let loginartHtml = loginart();
 
 const pageSize = 2;
 let pageNumber = 1;
+let allPageDatas = [];
 
 // $("#app").html(registerHtml);
 
@@ -19,7 +20,29 @@ const _handleSubmit = (router) => {
         // console.log(e);
         console.log(router);
         e.preventDefault(); //拦截表单自发的提交事件
-        router.go("/index");
+
+        let params = {
+            us: $("#login-username").val(),
+            ps: $("#login-pwd").val(),
+        };
+
+        $.ajax({
+            url: "/api/users/signin",
+            type: "post",
+            data: params,
+    
+            success: (res) => {
+                console.log(res);
+                if (res.status == 0) {
+                    localStorage.setItem("userInfo",JSON.stringify(res.result))
+                    router.go("/index");
+                } else {
+                    alert(res.msg);
+                }
+            },
+        });
+
+        // router.go("/index");
     };
 };
 
@@ -49,8 +72,8 @@ const _userAdd = () => {
     });
 };
 
-const _paging = (data) => {
-    let total = data.length;
+const _paging = () => {
+    let total = allPageDatas.length;
     let pageCount = Math.ceil(total / pageSize);
     let pageArr = new Array(pageCount);
 
@@ -60,26 +83,33 @@ const _paging = (data) => {
         })
     );
 
-    _getPageData(pageNumber, data);
+    _getPageData(pageNumber, allPageDatas);
 
-    $("#user-paging li:nth-child(2)").addClass("active");
+    //删除之后数据停了当前页面，删除到一定程度时，自动向前高亮
+    if (pageCount  >= pageNumber) {
+        pageNumber = pageNumber;
+    } else {
+        pageNumber = pageNumber - 1 ;//如果总页数 < 当前页
+    }
+
+    $(`#user-paging li:nth-child(${pageNumber+1})`).addClass("active");
     $("#user-paging li.page").on("click", function () {
         console.log($(this).context.innerText);
         $(this).addClass("active").siblings().removeClass("active");
-        pageNumber = Number($(this).context.innerText)
-        _getPageData(pageNumber, data);
+        pageNumber = Number($(this).context.innerText);
+        _getPageData(pageNumber, allPageDatas);
     });
 };
 
-const _getPageData = (pageNumber, data) => { //获取分页后的数据
+const _getPageData = (pageNumber, data) => {
+    //获取分页后的数据
     let start = (pageNumber - 1) * pageSize;
     let end = pageNumber * pageSize;
     $("#user-list").html(
         userListTpl({
-            data:  data.slice(start,end)
+            data: data.slice(start, end),
         })
     );
-   
 };
 
 const _getlist = (name) => {
@@ -95,7 +125,8 @@ const _getlist = (name) => {
                 //         data: res.result,
                 //     })
                 // );
-                _paging(res.result);
+                allPageDatas = res.result;
+                _paging();
             } else {
                 alert(res.msg);
             }
@@ -105,6 +136,9 @@ const _getlist = (name) => {
 
 const index = (router) => {
     return (req, res, next) => {
+        let indexartHtml = indexart({
+            userInfo:JSON.parse(localStorage.getItem('userInfo'))
+        });
         res.render(indexartHtml); //$("#app").html(registerHtml);
         $(".wrapper").trigger("resize");
 
@@ -113,16 +147,29 @@ const index = (router) => {
         _getlist("");
 
         //给$("#user-list") 的 .remove添加点击事件，代理即使后面添加的.remove也可以
-        $("#user-list").on("click",".remove",function(e){
-            let del_id = ($(this).context.dataset.id).split("_")[1]
+        $("#user-list").on("click", ".remove", function (e) {
+            let del_id = $(this).context.dataset.id.split("_")[1];
             $.ajax({
                 url: "/api/users/del",
                 type: "post",
-                data: {id:del_id},
-        
+                data: { id: del_id },
+
                 success: (res) => {
-                    alert(res.msg)
+                    alert(res.msg);
                     _getlist("");
+                },
+            });
+        });
+
+        //退出
+        $("#sign-out").on('click',function(){
+            $.ajax({
+                url: "/api/users/signout",
+                type: "get",
+                success: (res) => {
+                    if(res.status == 0){
+                        router.go("/login");
+                    }
                 },
             });
         })

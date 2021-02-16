@@ -4,7 +4,7 @@ import loginart from "../views/login.art";
 import userListTpl from "../views/user-list.art";
 import userPagingTpl from "../views/user-paging.art";
 
-let indexartHtml = indexart();
+// let indexartHtml = indexart();
 let registerHtml = registerart();
 let loginartHtml = loginart();
 
@@ -34,6 +34,7 @@ const _handleSubmit = (router) => {
             success: (res) => {
                 console.log(res);
                 if (res.status == 0) {
+                    localStorage.setItem("userInfo",JSON.stringify(res.result))
                     router.go("/index");
                 } else {
                     alert(res.msg);
@@ -135,6 +136,9 @@ const _getlist = (name) => {
 
 const index = (router) => {
     return (req, res, next) => {
+        let indexartHtml = indexart({
+            userInfo:JSON.parse(localStorage.getItem('userInfo'))
+        });
         res.render(indexartHtml); //$("#app").html(registerHtml);
         $(".wrapper").trigger("resize");
 
@@ -159,8 +163,15 @@ const index = (router) => {
 
         //退出
         $("#sign-out").on('click',function(){
-            console.log('dsfdsfs')
-            router.go("/login");
+            $.ajax({
+                url: "/api/users/signout",
+                type: "get",
+                success: (res) => {
+                    if(res.status == 0){
+                        router.go("/login");
+                    }
+                },
+            });
         })
     };
 };

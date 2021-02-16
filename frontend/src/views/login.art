@@ -1,10 +1,10 @@
 <div class="login-box">
     <div class="login-logo">
-        <a href="index2.html"><b>Node Pro Login</a>
+        <b>Node Pro Login</b>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Sign in to cookie-session</p>
 
         <form id="submitfrom" action="">
             <div class="form-group has-feedback">
@@ -15,7 +15,7 @@
                     placeholder="用户名"
                 />
                 <span
-                    class="glyphicon glyphicon-envelope form-control-feedback"
+                    class="glyphicon glyphicon-user form-control-feedback"
                 ></span>
             </div>
             <div class="form-group has-feedback">
