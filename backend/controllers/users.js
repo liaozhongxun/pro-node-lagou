@@ -47,18 +47,36 @@ const signin = async (req, res, next) => {
         // console.log(result);
         // res.send({ status: 0, msg: "ok", result: result });
         let pshash = hasuser[0].ps; //如果用户存在拿到加密后的hash
-        if(await compare(ps,pshash)){ //通过compare验证登入密码与注册加密的密码是否匹配
-            res.send({ status: 0, msg: "ok"});
+        //通过compare验证登入密码与注册加密的密码是否匹配
+        if (await compare(ps, pshash)) {
+            req.session.username = us; //通过cookie-session设置session
+            res.send({ status: 0, msg: "ok" ,result:{
+                username:us
+            }});
 
             // 手动往前端cookie，相同域名下任何请求都会自动写的cookie，包括图片资源
             // const sessionId = randomstring.generate();
             // res.set('Set-Cookie',`sessionId=${sessionId};Path=/;HttpOnly`)
-        }else{
-            res.send({ status: -1, msg: "用户名或密码错误!"});
+        } else {
+            res.send({ status: -1, msg: "用户名或密码错误!" });
         }
-        
-    }else{
-        res.send({ status: -1, msg: "用户不存在"});
+    } else {
+        res.send({ status: -1, msg: "用户不存在" });
+    }
+};
+
+//退出登录
+const signout = async (req, res, next) => {
+    req.session = null;
+    res.send({ status: 0, msg: "ok", result: "请重新登录" });
+};
+
+//权限验证
+const rulevis = async (req, res, next) => {
+    if (req.session.username) {
+        res.send({ status: 0, msg: "状态正常" });
+    } else {
+        res.send({ status: -1, msg: "请重新登入" });
     }
 };
 
@@ -68,4 +86,6 @@ module.exports = {
     delUser,
     modify,
     signin,
+    signout,
+    rulevis,
 };
