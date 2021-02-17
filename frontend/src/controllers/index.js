@@ -1,12 +1,8 @@
 import indexart from "../views/index.art";
-import registerart from "../views/register.art";
-import loginart from "../views/login.art";
 import userListTpl from "../views/user-list.art";
 import userPagingTpl from "../views/user-paging.art";
 
 // let indexartHtml = indexart();
-let registerHtml = registerart();
-let loginartHtml = loginart();
 
 const pageSize = 2;
 let pageNumber = 1;
@@ -14,41 +10,7 @@ let allPageDatas = [];
 
 // $("#app").html(registerHtml);
 
-const _handleSubmit = (router) => {
-    //算简单的柯理化
-    return (e) => {
-        // console.log(e);
-        console.log(router);
-        e.preventDefault(); //拦截表单自发的提交事件
-
-        let params = {
-            us: $("#login-username").val(),
-            ps: $("#login-pwd").val(),
-        };
-
-        $.ajax({
-            url: "/api/users/signin",
-            type: "post",
-            data: params,
-    
-            success: (res) => {
-                console.log(res);
-                if (res.status == 0) {
-                    localStorage.setItem("userInfo",JSON.stringify(res.result))
-                    router.go("/index");
-                } else {
-                    alert(res.msg);
-                }
-            },
-        });
-
-        // router.go("/index");
-    };
-};
-
 const _userAdd = () => {
-    console.log($("#exampleInputUser1").val());
-    console.log($("#exampleInputPassword1").val());
     let params = {
         us: $("#exampleInputUser1").val(),
         ps: $("#exampleInputPassword1").val(),
@@ -139,12 +101,18 @@ const index = (router) => {
         let indexartHtml = indexart({
             userInfo:JSON.parse(localStorage.getItem('userInfo'))
         });
+
+        //渲染首页
         res.render(indexartHtml); //$("#app").html(registerHtml);
+
+        //首屏resize充满屏幕
         $(".wrapper").trigger("resize");
 
+        //初次渲染用户列表
+        _getlist("");
+        
         $("#userAdd").on("click", _userAdd);
 
-        _getlist("");
 
         //给$("#user-list") 的 .remove添加点击事件，代理即使后面添加的.remove也可以
         $("#user-list").on("click", ".remove", function (e) {
@@ -176,17 +144,5 @@ const index = (router) => {
     };
 };
 
-const login = (router) => {
-    return (req, res, next) => {
-        res.render(loginartHtml);
-        $("#loginin").on("click", _handleSubmit(router));
-    };
-};
 
-const register = (router) => {
-    return (req, res, next) => {
-        res.render(registerHtml);
-    };
-};
-
-export { index, login, register };
+export { index };

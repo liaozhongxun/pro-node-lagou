@@ -1,8 +1,10 @@
 import indexart from "../views/index.art";
+import loginart from "../views/login.art";
 import userListTpl from "../views/user-list.art";
 import userPagingTpl from "../views/user-paging.art";
 
 // let indexartHtml = indexart();
+let loginartHtml = loginart();
 
 const pageSize = 2;
 let pageNumber = 1;
@@ -170,5 +172,12 @@ const index = (router) => {
     };
 };
 
+const login = (router) => {
+    return (req, res, next) => {
+        res.render(loginartHtml);
+        $("#loginin").on("click", _handleSubmit(router));
+    };
+};
 
-export { index };
+
+export { index, login };
