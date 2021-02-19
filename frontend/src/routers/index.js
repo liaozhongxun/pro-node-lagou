@@ -8,6 +8,7 @@ router.use((req) => {
     console.log("1");
     $.ajax({
         url: "/api/users/rulevis",
+        saync: true,
         type: "get",
         success: (res) => {
             if (res.status == 0) {
@@ -22,7 +23,7 @@ router.use((req) => {
     });
 });
 
-router.route("/", index(router));
+// router.route("/", index(router));
 router.route("/index", index(router));
 router.route("/login", login(router));
 

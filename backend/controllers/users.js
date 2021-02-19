@@ -50,9 +50,13 @@ const signin = async (req, res, next) => {
         //通过compare验证登入密码与注册加密的密码是否匹配
         if (await compare(ps, pshash)) {
             req.session.username = us; //通过cookie-session设置session
-            res.send({ status: 0, msg: "ok" ,result:{
-                username:us
-            }});
+            res.send({
+                status: 0,
+                msg: "ok",
+                result: {
+                    username: us,
+                },
+            });
 
             // 手动往前端cookie，相同域名下任何请求都会自动写的cookie，包括图片资源
             // const sessionId = randomstring.generate();
