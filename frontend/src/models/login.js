@@ -1,9 +1,10 @@
 import { ajax } from "../api";
 
-const loginApi = async (options,router) => {
+const loginApi = async (options, router) => {
     let res = await ajax(options);
     try {
         if (res.status == 0) {
+            console.log(res);
             localStorage.setItem("userInfo", JSON.stringify(res.result));
             router.go("/index");
         } else {
@@ -14,4 +15,17 @@ const loginApi = async (options,router) => {
     }
 };
 
-export { loginApi };
+const ruleApi = async (options, router) => {
+    let res = await ajax(options);
+    try {
+        if (res.status == 0) {
+            router.go("/index");
+        } else {
+            router.go("/login");
+        }
+    } catch (error) {
+        router.go("/login");
+    }
+};
+
+export { loginApi, ruleApi };

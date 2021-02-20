@@ -17,3 +17,9 @@ body {
 .login-logo{
     color:#fff;
 }
+
+.login-box-body{
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgb(7 17 27 / 20%);
+    opacity: .95;
+}

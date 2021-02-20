@@ -4,7 +4,7 @@
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to cookie-session</p>
+        <p class="login-box-msg">Sign in to jwt vis</p>
 
         <form id="submitfrom" action="">
             <div class="form-group has-feedback">
