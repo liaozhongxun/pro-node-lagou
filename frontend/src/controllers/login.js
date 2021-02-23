@@ -15,24 +15,6 @@ const _handleSubmit = (router) => {
                 ps: $("#login-pwd").val(),
             }
         },router)
-
-        // $.ajax({
-        //     url: "/api/users/signin",
-        //     type: "post",
-        //     data: params,
-
-        //     success: (res) => {
-        //         console.log(res);
-        //         if (res.status == 0) {
-        //             localStorage.setItem("userInfo", JSON.stringify(res.result));
-        //             router.go("/index");
-        //         } else {
-        //             alert(res.msg);
-        //         }
-        //     },
-        // });
-
-        // router.go("/index");
     };
 };
 
